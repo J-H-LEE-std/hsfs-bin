@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
         start = thr.currentThreadCpuTime
         hs.initHM()
         end = thr.currentThreadCpuTime
-        timelog.add(round((start - end) / 1000000000.0, 4))
+        timelog.add((end - start) / 1000000000.0)
 
         for (it in 1..iter) {
             start = thr.currentThreadCpuTime
@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
             avglog.log.add(Pair(it, hs.calcAvgScore()))
             hs.adjustHMCR()
             end = thr.currentThreadCpuTime
-            timelog.add(round((start - end) / 1000000000.0, 4))
+            timelog.add((end - start) / 1000000000.0)
         }
 
         val selected = getFeatureIndex(hs.getMaxElem().first)
@@ -41,7 +41,7 @@ fun main(args: Array<String>) {
         avglog.writeToFile("./src/main/resources/avglog_truck.csv")
         hs.exportARFF(selected)
         println("Saved Arff File Successfully.")
-        println("Execution Finished. Total spent CPU time: ${round(timelog.sum(), 3)}")
+        println("Execution Finished. Total spent CPU time: ${round(timelog.sum(), 3)}sec.")
     } catch (e: Exception){
         println(e.message)
     }
